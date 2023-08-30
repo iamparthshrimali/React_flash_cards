@@ -1,4 +1,5 @@
-import "./styles.css";
+import { useState } from "react";
+import "./style.css";
 
 export default function App() {
   return (
@@ -40,8 +41,16 @@ const questions = [
       "What do we call an input element that is completely synchronised with state?",
     answer: "Controlled element"
   }
-];
+]
 
 function FlashCards() {
-  return <div>TODO</div>;
+  const [selectedId, setSelectedId] = useState(null);
+  const handleClick = (id) => {
+    setSelectedId(id === selectedId ? null : id)
+  }
+  return <div className="flashcards">
+    {
+      questions.map((question) => <div key={question.id} className={`${selectedId === question.id ? "wrap-original-transform  original-transform selected" :" "} flashcard`} onClick={() => handleClick(question.id)}><p>{question.id === selectedId ? question.answer : question.question}</p></div>)
+    }
+  </div>
 }
